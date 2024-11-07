@@ -1,4 +1,4 @@
-package org.telegram.ui.Components;
+package org.littlebrother.telegram.ui.Components;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -21,17 +21,17 @@ import android.widget.TextView;
 
 import androidx.core.widget.NestedScrollView;
 
-import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.DocumentObject;
-import org.telegram.messenger.FileLoader;
-import org.telegram.messenger.ImageLocation;
-import org.telegram.messenger.LocaleController;
-import org.telegram.messenger.MessageObject;
-import org.telegram.messenger.R;
-import org.telegram.messenger.SvgHelper;
-import org.telegram.tgnet.TLRPC;
-import org.telegram.ui.ActionBar.BottomSheet;
-import org.telegram.ui.ActionBar.Theme;
+import org.littlebrother.telegram.messenger.AndroidUtilities;
+import org.littlebrother.telegram.messenger.DocumentObject;
+import org.littlebrother.telegram.messenger.FileLoader;
+import org.littlebrother.telegram.messenger.ImageLocation;
+import org.littlebrother.telegram.messenger.LocaleController;
+import org.littlebrother.telegram.messenger.MessageObject;
+import org.littlebrother.telegram.messenger.R;
+import org.littlebrother.telegram.messenger.SvgHelper;
+import org.littlebrother.telegram.tgnet.TLRPC;
+import org.littlebrother.telegram.ui.ActionBar.BottomSheet;
+import org.littlebrother.telegram.ui.ActionBar.Theme;
 
 public class UpdateAppAlertDialog extends BottomSheet {
 

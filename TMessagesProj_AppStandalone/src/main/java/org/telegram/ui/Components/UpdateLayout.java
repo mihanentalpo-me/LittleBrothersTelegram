@@ -1,4 +1,4 @@
-package org.telegram.ui.Components;
+package org.littlebrother.telegram.ui.Components;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
@@ -19,15 +19,15 @@ import android.view.ViewGroup;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
-import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.FileLoader;
-import org.telegram.messenger.ImageLoader;
-import org.telegram.messenger.LocaleController;
-import org.telegram.messenger.R;
-import org.telegram.messenger.SharedConfig;
-import org.telegram.ui.ActionBar.SimpleTextView;
-import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.IUpdateLayout;
+import org.littlebrother.telegram.messenger.AndroidUtilities;
+import org.littlebrother.telegram.messenger.FileLoader;
+import org.littlebrother.telegram.messenger.ImageLoader;
+import org.littlebrother.telegram.messenger.LocaleController;
+import org.littlebrother.telegram.messenger.R;
+import org.littlebrother.telegram.messenger.SharedConfig;
+import org.littlebrother.telegram.ui.ActionBar.SimpleTextView;
+import org.littlebrother.telegram.ui.ActionBar.Theme;
+import org.littlebrother.telegram.ui.IUpdateLayout;
 
 import java.io.File;
 import java.util.ArrayList;

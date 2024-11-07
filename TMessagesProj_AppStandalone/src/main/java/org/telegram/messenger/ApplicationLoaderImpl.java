@@ -1,6 +1,6 @@
-package org.telegram.messenger;
+package org.littlebrother.telegram.messenger;
 
-import static org.telegram.ui.PremiumPreviewFragment.applyNewSpan;
+import static org.littlebrother.telegram.ui.PremiumPreviewFragment.applyNewSpan;
 
 import android.app.Activity;
 import android.content.Context;
@@ -13,23 +13,23 @@ import android.view.ViewGroup;
 import androidx.core.content.FileProvider;
 
 import org.json.JSONObject;
-import org.telegram.messenger.web.BuildConfig;
-import org.telegram.messenger.web.R;
-import org.telegram.tgnet.ConnectionsManager;
-import org.telegram.tgnet.TL_smsjobs;
-import org.telegram.tgnet.TLRPC;
-import org.telegram.ui.ActionBar.AlertDialog;
-import org.telegram.ui.ActionBar.BaseFragment;
-import org.telegram.ui.Adapters.DrawerLayoutAdapter;
-import org.telegram.ui.Components.AlertsCreator;
-import org.telegram.ui.Components.BulletinFactory;
-import org.telegram.ui.Components.SpannableStringLight;
-import org.telegram.ui.Components.UpdateAppAlertDialog;
-import org.telegram.ui.Components.UpdateLayout;
-import org.telegram.ui.IUpdateLayout;
-import org.telegram.ui.LaunchActivity;
-import org.telegram.ui.SMSStatsActivity;
-import org.telegram.ui.SMSSubscribeSheet;
+import org.littlebrother.telegram.messenger.web.BuildConfig;
+import org.littlebrother.telegram.messenger.web.R;
+import org.littlebrother.telegram.tgnet.ConnectionsManager;
+import org.littlebrother.telegram.tgnet.TL_smsjobs;
+import org.littlebrother.telegram.tgnet.TLRPC;
+import org.littlebrother.telegram.ui.ActionBar.AlertDialog;
+import org.littlebrother.telegram.ui.ActionBar.BaseFragment;
+import org.littlebrother.telegram.ui.Adapters.DrawerLayoutAdapter;
+import org.littlebrother.telegram.ui.Components.AlertsCreator;
+import org.littlebrother.telegram.ui.Components.BulletinFactory;
+import org.littlebrother.telegram.ui.Components.SpannableStringLight;
+import org.littlebrother.telegram.ui.Components.UpdateAppAlertDialog;
+import org.littlebrother.telegram.ui.Components.UpdateLayout;
+import org.littlebrother.telegram.ui.IUpdateLayout;
+import org.littlebrother.telegram.ui.LaunchActivity;
+import org.littlebrother.telegram.ui.SMSStatsActivity;
+import org.littlebrother.telegram.ui.SMSSubscribeSheet;
 
 import java.io.File;
 import java.util.ArrayList;

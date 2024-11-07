@@ -1,9 +1,9 @@
-package org.telegram.ui;
+package org.littlebrother.telegram.ui;
 
-import static org.telegram.messenger.AndroidUtilities.dp;
-import static org.telegram.messenger.LocaleController.formatPluralString;
-import static org.telegram.messenger.LocaleController.formatString;
-import static org.telegram.messenger.LocaleController.getString;
+import static org.littlebrother.telegram.messenger.AndroidUtilities.dp;
+import static org.littlebrother.telegram.messenger.LocaleController.formatPluralString;
+import static org.littlebrother.telegram.messenger.LocaleController.formatString;
+import static org.littlebrother.telegram.messenger.LocaleController.getString;
 
 import android.Manifest;
 import android.app.Activity;
@@ -26,29 +26,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.BotWebViewVibrationEffect;
-import org.telegram.messenger.LocaleController;
-import org.telegram.messenger.NotificationCenter;
-import org.telegram.messenger.SMSJobController;
-import org.telegram.messenger.UserConfig;
-import org.telegram.messenger.Utilities;
-import org.telegram.messenger.browser.Browser;
-import org.telegram.messenger.web.R;
-import org.telegram.tgnet.ConnectionsManager;
-import org.telegram.tgnet.TLRPC;
-import org.telegram.tgnet.TL_smsjobs;
-import org.telegram.ui.ActionBar.AlertDialog;
-import org.telegram.ui.ActionBar.BaseFragment;
-import org.telegram.ui.ActionBar.BottomSheet;
-import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.Components.BulletinFactory;
-import org.telegram.ui.Components.CheckBoxSquare;
-import org.telegram.ui.Components.FireworksOverlay;
-import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.LinkSpanDrawable;
-import org.telegram.ui.Components.RLottieImageView;
-import org.telegram.ui.Stories.recorder.ButtonWithCounterView;
+import org.littlebrother.telegram.messenger.AndroidUtilities;
+import org.littlebrother.telegram.messenger.BotWebViewVibrationEffect;
+import org.littlebrother.telegram.messenger.LocaleController;
+import org.littlebrother.telegram.messenger.NotificationCenter;
+import org.littlebrother.telegram.messenger.SMSJobController;
+import org.littlebrother.telegram.messenger.UserConfig;
+import org.littlebrother.telegram.messenger.Utilities;
+import org.littlebrother.telegram.messenger.browser.Browser;
+import org.littlebrother.telegram.messenger.web.R;
+import org.littlebrother.telegram.tgnet.ConnectionsManager;
+import org.littlebrother.telegram.tgnet.TLRPC;
+import org.littlebrother.telegram.tgnet.TL_smsjobs;
+import org.littlebrother.telegram.ui.ActionBar.AlertDialog;
+import org.littlebrother.telegram.ui.ActionBar.BaseFragment;
+import org.littlebrother.telegram.ui.ActionBar.BottomSheet;
+import org.littlebrother.telegram.ui.ActionBar.Theme;
+import org.littlebrother.telegram.ui.Components.BulletinFactory;
+import org.littlebrother.telegram.ui.Components.CheckBoxSquare;
+import org.littlebrother.telegram.ui.Components.FireworksOverlay;
+import org.littlebrother.telegram.ui.Components.LayoutHelper;
+import org.littlebrother.telegram.ui.Components.LinkSpanDrawable;
+import org.littlebrother.telegram.ui.Components.RLottieImageView;
+import org.littlebrother.telegram.ui.Stories.recorder.ButtonWithCounterView;
 
 import java.util.Locale;
 
