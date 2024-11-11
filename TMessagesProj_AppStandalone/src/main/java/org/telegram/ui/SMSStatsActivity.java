@@ -1,10 +1,10 @@
-package org.telegram.ui;
+package org.littlebrother.telegram.ui;
 
-import static org.telegram.messenger.AndroidUtilities.dp;
-import static org.telegram.messenger.AndroidUtilities.dpf2;
-import static org.telegram.messenger.LocaleController.formatPluralString;
-import static org.telegram.messenger.LocaleController.formatString;
-import static org.telegram.messenger.LocaleController.getString;
+import static org.littlebrother.telegram.messenger.AndroidUtilities.dp;
+import static org.littlebrother.telegram.messenger.AndroidUtilities.dpf2;
+import static org.littlebrother.telegram.messenger.LocaleController.formatPluralString;
+import static org.littlebrother.telegram.messenger.LocaleController.formatString;
+import static org.littlebrother.telegram.messenger.LocaleController.getString;
 
 import android.Manifest;
 import android.content.Context;
@@ -42,37 +42,37 @@ import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.DefaultItemAnimator;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.telegram.messenger.AndroidUtilities;
-import org.telegram.messenger.Emoji;
-import org.telegram.messenger.FileLog;
-import org.telegram.messenger.LocaleController;
-import org.telegram.messenger.LocationController;
-import org.telegram.messenger.NotificationCenter;
-import org.telegram.messenger.SMSJobController;
-import org.telegram.messenger.browser.Browser;
-import org.telegram.messenger.web.R;
-import org.telegram.tgnet.ConnectionsManager;
-import org.telegram.tgnet.TLRPC;
-import org.telegram.tgnet.TL_smsjobs;
-import org.telegram.ui.ActionBar.AlertDialog;
-import org.telegram.ui.ActionBar.BaseFragment;
-import org.telegram.ui.ActionBar.Theme;
-import org.telegram.ui.Cells.HeaderCell;
-import org.telegram.ui.Cells.LanguageCell;
-import org.telegram.ui.Cells.TextCell;
-import org.telegram.ui.Cells.TextInfoPrivacyCell;
-import org.telegram.ui.Components.AnimatedTextView;
-import org.telegram.ui.Components.BottomSheetWithRecyclerListView;
-import org.telegram.ui.Components.BulletinFactory;
-import org.telegram.ui.Components.CombinedDrawable;
-import org.telegram.ui.Components.CubicBezierInterpolator;
-import org.telegram.ui.Components.LayoutHelper;
-import org.telegram.ui.Components.LinkSpanDrawable;
-import org.telegram.ui.Components.ListView.AdapterWithDiffUtils;
-import org.telegram.ui.Components.Premium.LimitPreviewView;
-import org.telegram.ui.Components.Premium.boosts.GiftInfoBottomSheet;
-import org.telegram.ui.Components.RecyclerListView;
-import org.telegram.ui.Stories.recorder.ButtonWithCounterView;
+import org.littlebrother.telegram.messenger.AndroidUtilities;
+import org.littlebrother.telegram.messenger.Emoji;
+import org.littlebrother.telegram.messenger.FileLog;
+import org.littlebrother.telegram.messenger.LocaleController;
+import org.littlebrother.telegram.messenger.LocationController;
+import org.littlebrother.telegram.messenger.NotificationCenter;
+import org.littlebrother.telegram.messenger.SMSJobController;
+import org.littlebrother.telegram.messenger.browser.Browser;
+import org.littlebrother.telegram.messenger.web.R;
+import org.littlebrother.telegram.tgnet.ConnectionsManager;
+import org.littlebrother.telegram.tgnet.TLRPC;
+import org.littlebrother.telegram.tgnet.TL_smsjobs;
+import org.littlebrother.telegram.ui.ActionBar.AlertDialog;
+import org.littlebrother.telegram.ui.ActionBar.BaseFragment;
+import org.littlebrother.telegram.ui.ActionBar.Theme;
+import org.littlebrother.telegram.ui.Cells.HeaderCell;
+import org.littlebrother.telegram.ui.Cells.LanguageCell;
+import org.littlebrother.telegram.ui.Cells.TextCell;
+import org.littlebrother.telegram.ui.Cells.TextInfoPrivacyCell;
+import org.littlebrother.telegram.ui.Components.AnimatedTextView;
+import org.littlebrother.telegram.ui.Components.BottomSheetWithRecyclerListView;
+import org.littlebrother.telegram.ui.Components.BulletinFactory;
+import org.littlebrother.telegram.ui.Components.CombinedDrawable;
+import org.littlebrother.telegram.ui.Components.CubicBezierInterpolator;
+import org.littlebrother.telegram.ui.Components.LayoutHelper;
+import org.littlebrother.telegram.ui.Components.LinkSpanDrawable;
+import org.littlebrother.telegram.ui.Components.ListView.AdapterWithDiffUtils;
+import org.littlebrother.telegram.ui.Components.Premium.LimitPreviewView;
+import org.littlebrother.telegram.ui.Components.Premium.boosts.GiftInfoBottomSheet;
+import org.littlebrother.telegram.ui.Components.RecyclerListView;
+import org.littlebrother.telegram.ui.Stories.recorder.ButtonWithCounterView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -162,7 +162,7 @@ public class SMSStatsActivity extends GradientHeaderActivity implements Notifica
                 default:
                 case VIEW_TYPE_SHADOW:
                     view = new TextInfoPrivacyCell(getContext());
-                    Drawable shadowDrawable = Theme.getThemedDrawable(getContext(), org.telegram.messenger.R.drawable.greydivider, Theme.getColor(Theme.key_windowBackgroundGrayShadow, resourceProvider));
+                    Drawable shadowDrawable = Theme.getThemedDrawable(getContext(), org.littlebrother.telegram.messenger.R.drawable.greydivider, Theme.getColor(Theme.key_windowBackgroundGrayShadow, resourceProvider));
                     Drawable background = new ColorDrawable(Theme.getColor(Theme.key_windowBackgroundGray));
                     CombinedDrawable combinedDrawable = new CombinedDrawable(background, shadowDrawable, 0, 0);
                     combinedDrawable.setFullsize(true);
@@ -472,7 +472,7 @@ public class SMSStatsActivity extends GradientHeaderActivity implements Notifica
                             builder.getDismissRunnable().run();
                         });
                     }
-                    builder.setNegativeButton(LocaleController.getString("Cancel", org.telegram.messenger.R.string.Cancel), null);
+                    builder.setNegativeButton(LocaleController.getString("Cancel", org.littlebrother.telegram.messenger.R.string.Cancel), null);
                     showDialog(builder.create());
                 } catch (Exception e) {
                     FileLog.e(e);

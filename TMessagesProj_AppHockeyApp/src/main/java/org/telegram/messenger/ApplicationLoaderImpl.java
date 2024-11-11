@@ -1,4 +1,4 @@
-package org.telegram.messenger;
+package org.littlebrother.telegram.messenger;
 
 import android.app.Activity;
 import android.content.Context;
@@ -17,9 +17,9 @@ import com.microsoft.appcenter.analytics.EventProperties;
 import com.microsoft.appcenter.crashes.Crashes;
 import com.microsoft.appcenter.distribute.Distribute;
 
-import org.telegram.messenger.regular.BuildConfig;
-import org.telegram.tgnet.TLRPC;
-import org.telegram.ui.Components.AlertsCreator;
+import org.littlebrother.telegram.messenger.regular.BuildConfig;
+import org.littlebrother.telegram.tgnet.TLRPC;
+import org.littlebrother.telegram.ui.Components.AlertsCreator;
 
 import java.io.File;
 import java.util.Locale;
@@ -33,13 +33,13 @@ public class ApplicationLoaderImpl extends ApplicationLoader {
 
     @Override
     protected void startAppCenterInternal(Activity context) {
-        if (org.telegram.messenger.BuildConfig.DEBUG) {
+        if (org.littlebrother.telegram.messenger.BuildConfig.DEBUG) {
             return;
         }
         try {
             if (BuildVars.DEBUG_VERSION) {
                 Distribute.setEnabledForDebuggableBuild(true);
-                String appHash = org.telegram.messenger.BuildConfig.APP_CENTER_HASH;
+                String appHash = org.littlebrother.telegram.messenger.BuildConfig.APP_CENTER_HASH;
                 if (TextUtils.isEmpty(appHash)) {
                     throw new RuntimeException("App Center hash is empty. add to local.properties field APP_CENTER_HASH_PRIVATE and APP_CENTER_HASH_PUBLIC");
                 }
