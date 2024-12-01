@@ -7,6 +7,13 @@
     <string name="LanguageNameInEnglish">English</string>
     <string name="LanguageCode">en</string>
     <string name="ContinueOnThisLanguage">Continue in English</string>
+
+    <string name="username">Логин</string>
+    <string name="password">Пароль</string>
+    <string name="adress">Адрес списка доступа</string>
+    <string name="please_next">Введите данные списков доступа</string>
+    <string name="start_l">Продолжить</string>
+    <string name="cancel_l">Выход</string>
     <!--signin view-->
     <string name="YourPhone">Your Phone</string>
     <string name="StartText">Please confirm your country code and enter your phone number.</string>
