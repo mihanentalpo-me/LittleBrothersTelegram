@@ -77,6 +77,13 @@ public class ApplicationLoader extends Application {
     public static boolean canDrawOverlays;
     public static volatile long mainInterfacePausedStageQueueTime;
 
+    private static ApplicationLoader singleton;
+
+    public static ApplicationLoader getInstance() {
+        return singleton;
+    }
+
+
     private static PushListenerController.IPushListenerServiceProvider pushProvider;
     private static IMapsProvider mapsProvider;
     private static ILocationServiceProvider locationServiceProvider;
@@ -264,7 +271,10 @@ public class ApplicationLoader extends Application {
         }
 
         super.onCreate();
-
+        if (ApplicationLoader.singleton == null)
+        {
+            ApplicationLoader.singleton = this;
+        }
         if (BuildVars.LOGS_ENABLED) {
             FileLog.d("app start time = " + (startTime = SystemClock.elapsedRealtime()));
             try {
