@@ -128,6 +128,11 @@ import androidx.viewpager.widget.ViewPager;
 import com.google.android.exoplayer2.ui.AspectRatioFrameLayout;
 import com.google.zxing.common.detector.MathUtils;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+import org.telegram.messenger.support.BaseBlackDataBaseHelp;
+import org.telegram.messenger.support.BaseDataBlackNames;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
@@ -261,8 +266,11 @@ import org.telegram.ui.bots.WebViewRequestProps;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileReader;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.IDN;
@@ -313,7 +321,7 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     private static final LongSparseArray<ArrayList<ChatMessageCell>> chatMessageCellsCache = new LongSparseArray<ArrayList<ChatMessageCell>>();
 
     private HashMap<MessageObject, Boolean> alreadyPlayedStickers = new HashMap<>();
-
+    private BaseBlackDataBaseHelp sdaflkasdjfkkasldf;
     private Dialog closeChatDialog;
     private boolean showCloseChatDialogLater;
     private FrameLayout progressView;
@@ -2326,14 +2334,25 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
     public boolean isInsideContainer;
     public boolean reversed;
 
+    ArrayList<Long> blackList;
+    ArrayList<Long> whiteList;
+
     public ChatActivity(Bundle args) {
         super(args);
     }
 
     @Override
     public boolean onFragmentCreate() {
-        final long chatId = arguments.getLong("chat_id", 0);
-        final long userId = arguments.getLong("user_id", 0);
+        //final long chatId = arguments.getLong("chat_id", 0);
+        //final long userId = arguments.getLong("user_id", 0);
+
+        final long new_chat_id = arguments.getLong("chat_id", 0);
+        final long new_user_id = arguments.getLong("user_id", 0);
+
+        Log.d("df", " chat_id and user_id " + new_chat_id  + " " + new_user_id);
+        final long myUserId = UserConfig.getInstance(currentAccount).getClientUserId();
+        Log.d("my", " my account id saved == " + myUserId);
+
         final int encId = arguments.getInt("enc_id", 0);
         dialogFolderId = arguments.getInt("dialog_folder_id", 0);
         dialogFilterId = arguments.getInt("dialog_filter_id", 0);
@@ -2373,6 +2392,181 @@ public class ChatActivity extends BaseFragment implements NotificationCenter.Not
                 setQuickReplyId(quickReply.id);
             }
         }
+
+        blackList = new ArrayList<Long>();
+        whiteList = new ArrayList<Long>();
+//        Log.d("df", " get ERROR ! ");
+
+//        File  dir = new File("/data/user/0/org.telegram.messenger.beta/files", "vjd"); // was vjd mydirenterfile
+//        if(!dir.exists()){
+//            Log.d("df", " no dir exists ! ");
+//            return false;
+//        }
+
+        String data_buffer = "";
+        StringBuilder data_builder = new StringBuilder();
+        String line;
+
+        try {
+
+            String files_dir = ApplicationLoader.getInstance().getApplicationContext().getFilesDir().toString();
+
+            if (files_dir != null) {
+
+                File readingFiles = new File(files_dir, "bwtg-data-cache.json");
+                BufferedReader br = new BufferedReader(new FileReader(readingFiles));
+                while ((line = br.readLine()) != null) {
+                    if (data_builder.length() > 0) {
+                        data_builder.append('\n');
+                    }
+                    data_builder.append(line);
+                }
+                br.close();
+                data_buffer = data_builder.toString();
+            }
+            else
+            {
+                Log.d("bwtg", "getParentActivity returned null");
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            data_buffer = "{\"blacklist\":[], \"whitelist\":[]}";
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            data_buffer = "{\"blacklist\":[], \"whitelist\":[]}";
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+
+        JSONObject data = new JSONObject();
+
+        try {
+            data = new JSONObject(data_buffer);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+            if (!data.has("blacklist"))
+            {
+                data.put("blacklist", new JSONArray());
+            }
+            if (!data.has("whitelist"))
+            {
+                data.put("whitelist", new JSONArray());
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+//
+//        try {
+//            File readingFiles = new File(dir, "listblack2.txt");
+//            BufferedReader br = new BufferedReader(new FileReader(readingFiles));
+//
+//            while((line = br.readLine()) != null){
+//                String okLine = line.replace( " ", "");
+//                //Log.d("df", " my line == " + okLine);
+//
+//                Long test = Long.parseLong(okLine);
+//                //Log.d("df", " my long == " + test);
+//                blackList.add(test);
+//            }
+//
+//        }catch (Exception e){
+//            Log.d("df", " my catch messages = "+ e.getLocalizedMessage());
+//        }
+//
+//        try {
+//            File readingFiles = new File(dir, "listwhite2.txt");
+//            BufferedReader br = new BufferedReader(new FileReader(readingFiles));
+//
+//            while((line = br.readLine()) != null){
+//                String okLine = line.replace( " ", "");
+//                Log.d("df", " my line == " + okLine);
+//
+//                Long test = Long.parseLong(okLine);
+//                Log.d("df", " my long == " + test);
+//                whiteList.add(test);
+//            }
+//
+//        }catch (Exception e){
+//            Log.d("df", " my catch messages = "+ e.getLocalizedMessage());
+//        }
+
+        ArrayList<Long> blackList = new ArrayList<Long>();
+        ArrayList<Long> whiteList = new ArrayList<Long>();
+
+        try {
+
+            for(int i = 0; i < data.getJSONArray("blacklist").length(); i++){
+                blackList.add(data.getJSONArray("blacklist").getLong(i));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        try {
+
+            for(int i = 0; i < data.getJSONArray("whitelist").length(); i++){
+                whiteList.add(data.getJSONArray("whitelist").getLong(i));
+            }
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        // Log.d(" dsf", " pre strt 02");
+        Log.d("d", " Fragment Create ! chatIdModifi  = " + new_chat_id + ", blacklist size:" + String.valueOf(blackList.size()) + ", whitelist size:" + String.valueOf(whiteList.size()));
+
+        long tmp_chat_id = new_chat_id;
+        long tmp_user_id = new_user_id;
+
+
+        boolean okChange = false;
+
+        if(new_chat_id != 0){
+
+            if(!whiteList.contains(-(new_chat_id))){
+                Log.d("onFragmentCreate", "new_chat_id" + new_chat_id + " is NOT in whitelist, GOTO SAVED MESSAGES");
+                okChange = true;
+                tmp_chat_id = 0;
+                tmp_user_id = myUserId;
+            }
+            else
+            {
+                Log.d("onFragmentCreate", "new_chat_id" + new_chat_id + " is in whitelist, GOTO CHAT");
+            }
+
+        }
+
+        if (new_user_id != 0 && !okChange){
+
+            if (blackList.contains(new_chat_id))
+            {
+                Log.d("onFragmentCreate", "new_user_id" + new_user_id + " is in blackList, GOTO SAVED MESSAGES");
+
+                okChange = true;
+
+                tmp_chat_id = 0;
+                tmp_user_id = myUserId;
+            }
+            else
+            {
+                Log.d("onFragmentCreate", "new_user_id" + new_user_id + " is NOT in blackList, GOTO USER");
+            }
+
+        }
+
+        final long chatId = tmp_chat_id;
+        final long userId = tmp_user_id;
+        okChange = false;
 
         if (chatId != 0) {
             currentChat = getMessagesController().getChat(chatId);
