@@ -2,6 +2,7 @@
 <resources>
     <color name="divider">#dcdcdc</color>
     <color name="widget_name">#212121</color>
+    <color name="pure_black">#121212</color>
     <color name="widget_badge">#ffffff</color>
     <color name="widget_time">#96999C</color>
     <color name="widget_text">#8B8D8F</color>

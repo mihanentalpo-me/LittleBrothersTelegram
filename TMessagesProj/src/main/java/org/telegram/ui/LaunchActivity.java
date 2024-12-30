@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.app.ActivityManager;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
@@ -54,6 +55,7 @@ import android.util.SparseIntArray;
 import android.view.ActionMode;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MotionEvent;
 import android.view.View;
@@ -62,6 +64,7 @@ import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -84,6 +87,8 @@ import com.google.firebase.appindexing.Action;
 import com.google.firebase.appindexing.FirebaseUserActions;
 import com.google.firebase.appindexing.builders.AssistActionBuilder;
 
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.telegram.PhoneFormat.PhoneFormat;
 import org.telegram.messenger.AccountInstance;
 import org.telegram.messenger.AndroidUtilities;
@@ -127,6 +132,7 @@ import org.telegram.messenger.voip.VideoCapturerDevice;
 import org.telegram.messenger.voip.VoIPPendingCall;
 import org.telegram.messenger.voip.VoIPPreNotificationService;
 import org.telegram.messenger.voip.VoIPService;
+import org.telegram.tgnet.AsynchronousGet;
 import org.telegram.tgnet.ConnectionsManager;
 import org.telegram.tgnet.TLObject;
 import org.telegram.tgnet.TLRPC;
@@ -205,6 +211,10 @@ import org.webrtc.voiceengine.WebRtcAudioTrack;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.text.DateFormat;
@@ -322,6 +332,10 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
     private boolean isNavigationBarColorFrozen = false;
 
+    private EditText textPassword;
+    private EditText textName;
+    private EditText textServer;
+
     private boolean navigateToPremiumBot;
     private Runnable navigateToPremiumGiftCallback;
 
@@ -360,6 +374,28 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
         }
         instance = this;
         ApplicationLoader.postInitApplication();
+
+        String ad =  getApplicationContext().getFilesDir().toString();
+        android.util.Log.d(" dsf", "get my context " + ad);
+
+        this.showToast("Enter auth info");
+
+        //  LinearLayout layout = layoutInflater.inflate(R.layout.toasy_inall,linearLayout);
+
+//        Toast myToast = new Toast(this);
+//        myToast.setDuration(Toast.LENGTH_LONG);
+//        myToast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+//       // myToast.view = layout;
+//        //myToast.setView(layout);
+//        myToast.show();
+
+
+
+        // check if class no own datas
+
+        View dialogView = prepareAccessListDialog();
+
+        this.showAccessListDialog(dialogView);
         AndroidUtilities.checkDisplaySize(this, getResources().getConfiguration());
         currentAccount = UserConfig.selectedAccount;
         if (!UserConfig.getInstance(currentAccount).isClientActivated()) {
@@ -978,6 +1014,154 @@ public class LaunchActivity extends BasePermissionsActivity implements INavigati
 
         RestrictedLanguagesSelectActivity.checkRestrictedLanguages(false);
     }
+
+
+    void startLoadingAll(String name, String pass, String server) throws Exception {
+        new AsynchronousGet(name, pass, server, this).run(getApplicationContext());
+    }
+
+
+    protected void showAccessListDialog(View view) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+        builder.setView(view)
+                .setPositiveButton(LocaleController.getString("Начало", R.string.start_l) , new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int id) {
+                        // sign in the user ...
+
+                        android.util.Log.d("df", " get my data's " + textPassword.getText());
+
+                        try {
+
+                            JSONObject data = new JSONObject();
+                            data.put("server", textServer.getText().toString());
+                            data.put("login", textName.getText().toString());
+                            data.put("password", textPassword.getText().toString());
+
+                            File gpxfile = new File(getApplicationContext().getFilesDir().toString(), "bwtg-auth.json");
+                            FileWriter writer = new FileWriter(gpxfile);
+                            writer.append(data.toString());
+                            writer.flush();
+                            writer.close();
+
+                            startLoadingAll( textName.getText().toString(), textPassword.getText().toString(), textServer.getText().toString());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                })
+                .setNegativeButton(LocaleController.getString("Выход", R.string.cancel_l), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                        showAccessListDialog(view);
+                    }
+                });
+
+
+        final AlertDialog dialog = builder.create();
+
+        dialog.show();
+
+        ((AlertDialog) dialog).getButton(AlertDialog.BUTTON_NEGATIVE).setVisibility(View.INVISIBLE);
+    }
+
+    protected void showToast(String text)
+    {
+        Toast toast=Toast.makeText(getApplicationContext(), text ,Toast.LENGTH_SHORT);
+        toast.setMargin(50,50);
+        toast.show();
+    }
+
+    protected View prepareAccessListDialog()
+    {
+        LayoutInflater inflater = this.getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.dialog_show, null);
+        textPassword = (EditText) dialogView.findViewById(R.id.password);
+        textName = (EditText) dialogView.findViewById(R.id.username);
+        textServer = (EditText) dialogView.findViewById(R.id.adress);
+
+        String data_buffer = "";
+        StringBuilder data_builder = new StringBuilder();
+        String line;
+
+        try {
+
+            String files_dir = ApplicationLoader.getInstance().getApplicationContext().getFilesDir().toString();
+
+            if (files_dir != null) {
+
+                File readingFiles = new File(files_dir, "bwtg-auth.json");
+                long l = readingFiles.length();
+                BufferedReader br = new BufferedReader(new FileReader(readingFiles));
+                while ((line = br.readLine()) != null) {
+                    if (data_builder.length() > 0) {
+                        data_builder.append('\n');
+                    }
+                    data_builder.append(line);
+                }
+                br.close();
+                data_buffer = data_builder.toString();
+            }
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+
+            data_buffer = "{\"server\":\"\", \"login\":\"\", \"password\":\"\"}";
+        } catch (IOException e) {
+            e.printStackTrace();
+
+            data_buffer = "{\"server\":\"\", \"login\":\"\", \"password\":\"\"}";
+        } catch (Exception e) {
+            e.printStackTrace(); // Здесь косяк
+
+        }
+
+        JSONObject data = new JSONObject();
+
+        try {
+            data = new JSONObject(data_buffer);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        if (!data.has("server"))
+        {
+            try {
+                data.put("server", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!data.has("login"))
+        {
+            try {
+                data.put("login", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        if (!data.has("password"))
+        {
+            try {
+                data.put("password", "");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+        try {
+            textServer.setText(data.getString("server"));
+            textName.setText(data.getString("login"));
+            textPassword.setText(data.getString("password"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+        return dialogView;
+    }
+
 
     private void showAttachMenuBot(TLRPC.TL_attachMenuBot attachMenuBot, String startApp, boolean sidemenu) {
         drawerLayoutContainer.closeDrawer();
