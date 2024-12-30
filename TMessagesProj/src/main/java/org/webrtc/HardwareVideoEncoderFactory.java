@@ -22,9 +22,9 @@ import android.os.Build;
 
 import androidx.annotation.Nullable;
 
-import org.telegram.messenger.FileLog;
-import org.telegram.messenger.voip.Instance;
-import org.telegram.messenger.voip.VoIPService;
+import org.littlebrother.telegram.messenger.FileLog;
+import org.littlebrother.telegram.messenger.voip.Instance;
+import org.littlebrother.telegram.messenger.voip.VoIPService;
 
 import java.util.ArrayList;
 import java.util.List;
